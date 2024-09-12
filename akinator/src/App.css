@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  transition: all 0.3s ease-in-out;
+}
+
+.splash-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #1a1a1a;
+  animation: fadeOut 3s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.splash-image {
+  width: 400px;
+  height: auto;
+}
+
+.main-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.play-button {
+  padding: 20px 40px;
+  font-size: 24px;
+  border-radius: 30px;
+  border: 2px solid #fff;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.play-button:hover {
+  background-color: #555;
+  transform: scale(1.05);
+}
+
+/* Question screen styling */
+.question-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.question-box {
+  background-color: #222;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 400px;
+}
+
+.question-box h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #fff;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-button {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #fff;
+  background-color: #444;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.option-button:hover {
+  background-color: #666;
+  transform: scale(1.05);
+}

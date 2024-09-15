@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Load your CSV file
-df = pd.read_csv('cleaned_movies.csv')
+df = pd.read_csv('cleaned_movies_updated.csv')
 
 # Replace empty strings and NaN values with 'unknown'
 df.replace('', 'unknown', inplace=True)  # Replace empty strings

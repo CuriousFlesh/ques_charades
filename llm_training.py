@@ -4,7 +4,7 @@ from datasets import Dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM, Trainer, TrainingArguments
 
 # Load the CSV file
-df = pd.read_csv('cleaned_movies_u       pdated.csv')
+df = pd.read_csv('cleaned_movies_updated.csv')
 
 # Convert stringified lists to actual lists
 def convert_stringified_lists(row):
@@ -26,11 +26,11 @@ df = df.apply(convert_stringified_lists, axis=1)
 # Convert the DataFrame into a list of dictionaries
 data_dict = df.to_dict(orient='records')
 
-# Create a Dataset from the entire data, as you want to ask questions from the entire dataset
+# Create a Dataset from the entire data
 dataset = Dataset.from_dict({'text': data_dict})
 
 # Load the tokenizer and model
-model_name = 'EleutherAI/gpt-neo-1.3B'
+model_name = 'EleutherAI/gpt-neo-125M'
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 # Set the padding token if needed
@@ -45,9 +45,10 @@ model = AutoModelForCausalLM.from_pretrained(model_name)
 
 # Tokenize the dataset
 def preprocess_function(examples):
-    if isinstance(examples['text'], list):
-        examples['text'] = [str(item) for item in examples['text']]  # Ensure all text is stringified
-    return tokenizer(examples['text'], padding="max_length", truncation=True)
+    texts = [str(item) for item in examples['text']]  # Ensure all text is stringified
+    encodings = tokenizer(texts, padding="max_length", truncation=True)
+    encodings['labels'] = encodings['input_ids']  # Set the labels to be the same as input_ids
+    return encodings
 
 # Tokenize the entire dataset
 tokenized_dataset = dataset.map(preprocess_function, batched=True)
@@ -57,11 +58,13 @@ training_args = TrainingArguments(
     output_dir='./fine_tuned_llama_model',
     evaluation_strategy="epoch",
     learning_rate=2e-5,
-    per_device_train_batch_size=4,
-    per_device_eval_batch_size=4,
+    per_device_train_batch_size=2,
+    per_device_eval_batch_size=2,
     num_train_epochs=3,
     weight_decay=0.01,
     logging_dir='./logs',
+    use_mps_device=False,  # Ensure this is correctly set for your hardware
+    report_to="none"  # Suppress report logging if needed
 )
 
 # Initialize the Trainer using the entire tokenized dataset

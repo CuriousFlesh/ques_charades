@@ -4,15 +4,37 @@ import splash from './resources/Aki.jpeg';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
-  const [showQuestion, setShowQuestion] = useState(false); // New state for showing question
+  const [showQuestion, setShowQuestion] = useState(false);
+  const [question, setQuestion] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 3000);
     return () => clearTimeout(timer);
   }, []);
 
-  const handlePlayClick = () => {
-    setShowQuestion(true); // When "Play" is clicked, show the question
+  const handlePlayClick = async () => {
+    setShowQuestion(true);
+    await fetchQuestion(); // Fetch the first question from the backend
+  };
+
+  const fetchQuestion = async (selectedOption = null) => {
+    try {
+        const response = await fetch('http://localhost:5432/question', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ option: selectedOption, currentQuestion: question }), // Include the current question
+        });
+        const data = await response.json();
+        setQuestion(data.question);  // Update question from backend
+    } catch (error) {
+        console.error('Error fetching question:', error);
+    }
+  };
+
+  const handleOptionClick = async (option) => {
+    await fetchQuestion(option); // Fetch the next question based on the selected option
   };
 
   return (
@@ -24,11 +46,26 @@ const App = () => {
       ) : showQuestion ? (
         <div className="question-screen">
           <div className="question-box">
-            <h2>Is your character a real person?</h2>
+            <h2>{question}</h2>
             <div className="options">
-              <button className="option-button">Yes</button>
-              <button className="option-button">No</button>
-              <button className="option-button">I Don’t Know</button>
+              <button 
+                className="option-button" 
+                onClick={() => handleOptionClick('Yes')}
+              >
+                Yes
+              </button>
+              <button 
+                className="option-button" 
+                onClick={() => handleOptionClick('No')}
+              >
+                No
+              </button>
+              <button 
+                className="option-button" 
+                onClick={() => handleOptionClick("I Don't Know")}
+              >
+                I Don’t Know
+              </button>
             </div>
           </div>
         </div>

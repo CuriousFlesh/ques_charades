@@ -65,11 +65,11 @@ body, html {
     transform: scale(1);
   }
   100% {
-    transform: scale(1.3); /* Adjust this value for zoom effect */
+    transform: scale(1.3); 
   }
 }
 
-/* Background for the question screen */
+
 .question-screen {
   position: relative;
   width: 100%;
@@ -84,10 +84,10 @@ body, html {
 
 .question-box {
   position: absolute;
-  top: 45%; /* Adjusted upwards */
+  top: 45%; 
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.5); /* Lightened background color */
+  background-color: rgba(0, 0, 0, 0.5); 
   padding: 30px;
   border-radius: 15px;
   text-align: center;

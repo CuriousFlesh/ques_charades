@@ -29,7 +29,7 @@ const App = () => {
 
   const fetchQuestion = async (selectedOption = null) => {
     try {
-      const response = await fetch('http://localhost:6969/question', {
+      const response = await fetch('http://localhost:8000/myapp/get_questions/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

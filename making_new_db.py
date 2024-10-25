@@ -1,11 +1,20 @@
 import pandas as pd
 
-# Load the cleaned DataFrame
-cleaned_df = pd.read_csv('cleaned_first_1000_movies.csv')  # Load the cleaned movies data
+# Load the dataset
+df2 = pd.read_csv("new_data.csv")
 
-# Check for null values in the DataFrame
-null_counts = cleaned_df.isnull().sum()
+# Function to count words in a given text
+def count_words(text):
+    if isinstance(text, str):  # Ensure the text is a string
+        return len(text.split())
+    return 0  # Return 0 for non-string entries
 
-# Print the null counts for each column
-print("Null values in each column of cleaned_first_1000_movies:")
-print(null_counts[null_counts > 0])  # Only show columns with null values
+# Apply the function to the 'plot' column to get the word counts
+df2['word_count'] = df2['plot'].apply(count_words)
+
+# Filter for plots with fewer than 10 words
+less_than_10_words = df2[df2['word_count'] < 15]
+
+# Print the titles and corresponding plots
+for index, row in less_than_10_words.iterrows():
+    print(f"Movie: {row['title']}, Plot: {row['plot']}")

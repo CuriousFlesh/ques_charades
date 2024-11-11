@@ -4,7 +4,7 @@ import pandas as pd
 df = pd.read_csv("movies_attr_with_questions.csv")
 
 # Filter the DataFrame to get the row where title is "Pad Man"
-movie_details = df[df['title'] == '2 States']
+movie_details = df[df['title'] == 'Ra.One']
 
 # Check if the movie is found and print each column with its value
 if not movie_details.empty:

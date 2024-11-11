@@ -9,7 +9,7 @@ from django.conf import settings
 csv_path = os.path.join(settings.BASE_DIR, 'myapp', 'data', 'movies_attr_with_questions.csv')
 df = pd.read_csv(csv_path)
 question_list = [col for col in df.columns if col != 'title']
-rem_df = df.copy()  # Copy to track remaining movies during filtering
+rem_df = df.copy()  
 asked_questions = {}  # Store asked questions and user responses
 
 def choose_question(questions, rem_df):

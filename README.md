@@ -63,3 +63,7 @@ Access the Application:
 Open the following URLs in your browser:
 Django Back End: http://127.0.0.1:8000
 React Front End: http://localhost:3000
+
+**DATA PIPELINE**
+![image](https://github.com/user-attachments/assets/769a7fe2-ef50-4841-9096-eef3368df869)
+
